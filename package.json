@@ -1,0 +1,10 @@
+{
+  "name": "floccus-skill-template",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts":{
+    "invoke": "sls invoke local -f hello"
+  },
+  "author": "mesh1nek0x0 <mesh1nek0x0@gmail.com>",
+  "license": "MIT"
+}
