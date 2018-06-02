@@ -5,7 +5,7 @@
   "scripts": {
     "invoke": "sls invoke local -f greeting",
     "lint": "eslint src",
-    "test": "jest"
+    "test": "jest --config=jest.config.json"
   },
   "author": "mesh1nek0x0 <mesh1nek0x0@gmail.com>",
   "license": "MIT",
