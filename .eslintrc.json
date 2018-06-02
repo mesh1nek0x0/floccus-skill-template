@@ -1,0 +1,21 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "extends": "plugin:prettier/recommended",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 8
+    },
+    "rules": {
+      "no-console": 0,
+      "no-await-in-loop": 2,
+      "valid-jsdoc": 2,
+      "eqeqeq": 2,
+      "curly": 2,
+      "no-magic-numbers": 1,
+      "no-return-await": 2
+    }
+}
