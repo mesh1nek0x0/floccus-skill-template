@@ -5,7 +5,7 @@
   "scripts": {
     "invoke": "sls invoke local -f greeting",
     "lint": "eslint src",
-    "test": "jest"
+    "test": "jest --config=jest.config.json"
   },
   "author": "mesh1nek0x0 <mesh1nek0x0@gmail.com>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "jest": "^23.1.0",
+    "jest-junit": "^5.0.0",
     "prettier": "^1.13.4",
     "sinon": "^5.0.10"
   },
