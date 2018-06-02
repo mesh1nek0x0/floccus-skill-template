@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "invoke": "sls invoke local -f hello",
-    "lint": "eslint src/index.js"
+    "lint": "eslint src",
+    "test": "jest"
   },
   "author": "mesh1nek0x0 <mesh1nek0x0@gmail.com>",
   "license": "MIT",
@@ -12,6 +13,8 @@
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "prettier": "^1.13.4"
+    "jest": "^23.1.0",
+    "prettier": "^1.13.4",
+    "sinon": "^5.0.10"
   }
 }
