@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "invoke": "sls invoke local -f hello",
+    "invoke": "sls invoke local -f greeting",
     "lint": "eslint src",
     "test": "jest"
   },
@@ -16,5 +16,8 @@
     "jest": "^23.1.0",
     "prettier": "^1.13.4",
     "sinon": "^5.0.10"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.250.1"
   }
 }

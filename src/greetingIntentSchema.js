@@ -1,11 +1,22 @@
 'use strict';
 
 module.exports.handler = async (event, context, callback) => {
+    let acceptIntent = 'unkown';
+    if (event.intent === 'hi') {
+        acceptIntent = 'hi';
+        console.log('hello!');
+    }
+
+    if (event.intent === 'bye') {
+        acceptIntent = 'bye';
+        console.log('good bye!');
+    }
+
     const response = {
         statusCode: 200,
         body: JSON.stringify({
             message: 'Go Serverless v1.0! Your function executed successfully!',
-            input: event,
+            intent: acceptIntent,
         }),
     };
     if (event.result === 'failure') {
