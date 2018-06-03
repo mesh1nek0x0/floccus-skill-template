@@ -55,6 +55,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
+  hiIntent:
+    handler: src/intentHi.handler
   greeting:
     handler: src/greetingIntentSchema.handler
 
