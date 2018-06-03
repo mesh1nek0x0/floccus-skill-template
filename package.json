@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "invoke": "sls invoke local -f greeting",
+    "invoke:hi": "sls invoke local -f hiIntent",
     "lint": "eslint src",
     "test": "jest --config=jest.config.json"
   },
