@@ -5,6 +5,7 @@
   "scripts": {
     "invoke": "sls invoke local -f greeting --path src/__tests__/fixtures/hi-intent.json",
     "invoke:intent-hi": "sls invoke local -f hiIntent",
+    "deploy": "sls deploy",
     "lint": "eslint src",
     "test": "jest --config=jest.config.json"
   },

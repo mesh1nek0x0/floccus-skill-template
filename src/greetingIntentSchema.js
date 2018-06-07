@@ -13,17 +13,16 @@ module.exports.handler = async (event, context, callback) => {
     };
     let acceptIntent = 'unkown';
     if (event.intent === 'hi') {
-        params.FunctionName = 'intentHi';
+        params.FunctionName = `skill-${process.env.STAGE}-intentHi`;
         acceptIntent = 'hi';
         console.log('hello!');
     }
 
     if (event.intent === 'bye') {
         acceptIntent = 'bye';
-        params.FunctionName = 'intentBye';
+        params.FunctionName = `skill-${process.env.STAGE}-intentBye`;
         console.log('good bye!');
     }
-
     await lambda
         .invoke(params)
         .promise()

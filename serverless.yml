@@ -20,6 +20,8 @@ service: skill
 provider:
   name: aws
   runtime: nodejs8.10
+  environment:
+    STAGE: dev
 
 # you can overwrite defaults here
 #  stage: dev
@@ -55,18 +57,19 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hiIntent:
+  intentHi:
     handler: src/intentHi.handler
   greeting:
     handler: src/greetingIntentSchema.handler
+    role: intentSchemaRole
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
+    events:
+      - http:
+          path: greeting
+          method: get
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
 #      - sns: greeter-topic
@@ -94,13 +97,21 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+resources:
+  Resources:
+    intentSchemaRole:
+        Type: AWS::IAM::Role
+        Properties:
+          Path: /
+          RoleName: intentSchemaRole
+          ManagedPolicyArns:
+            # for invoke intent lambda
+            - 'arn:aws:iam::aws:policy/service-role/AWSLambdaRole'
+          AssumeRolePolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Principal:
+                  Service:
+                    - lambda.amazonaws.com
+                Action: sts:AssumeRole
