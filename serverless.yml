@@ -107,6 +107,7 @@ resources:
           ManagedPolicyArns:
             # for invoke intent lambda
             - 'arn:aws:iam::aws:policy/service-role/AWSLambdaRole'
+            - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
           AssumeRolePolicyDocument:
             Version: '2012-10-17'
             Statement:
