@@ -24,7 +24,7 @@ describe('greetingIntentSchemaのテスト', () => {
                 AWS.mock('Lambda', 'invoke', function(param, callback) {
                     callback(null, 'lambda invoke success');
                 });
-                await intentSchema.handler({ intent: testCase.intent }, {}, callback);
+                await intentSchema.handler({ body: `text=${testCase.intent}` }, {}, callback);
 
                 expect(callback.callCount).toBe(1);
                 expect(callback.args[0][0]).toBeNull();
@@ -37,16 +37,28 @@ describe('greetingIntentSchemaのテスト', () => {
     });
 
     describe('異常系', () => {
-        it('異常終了のテスト', async () => {
+        it('lambda呼び出し失敗時に、エラーとして終了すること', async () => {
             const callback = sinon.stub();
             AWS.mock('Lambda', 'invoke', function(param, callback) {
                 callback(new Error('failure sample'));
             });
-            await intentSchema.handler({}, {}, callback);
+            await intentSchema.handler({ body: 'text=unkown' }, {}, callback);
 
             expect(callback.callCount).toBe(1);
             expect(callback.args[0][0]).not.toBeNull();
             expect(callback.args[0][0]).toEqual(new Error('failure sample'));
+        });
+
+        it('token不一致時に、エラーとして終了すること', async () => {
+            const callback = sinon.stub();
+            await intentSchema.handler({ body: 'text=unkown&token=hoge' }, {}, callback);
+
+            expect(callback.callCount).toBe(1);
+            expect(callback.args[0][0]).toBeNull();
+            expect(callback.args[0][1]).toEqual({
+                statusCode: 400,
+                body: 'bad request',
+            });
         });
     });
 });
