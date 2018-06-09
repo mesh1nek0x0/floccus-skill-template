@@ -1,9 +1,20 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+const querystring = require('query-string');
 
 module.exports.handler = async (event, context, callback) => {
     console.log('lambda will started');
+    const parameter = querystring.parse(event['body']);
+
+    if (parameter.token !== process.env.SLACK_TOKEN) {
+        return callback(null, {
+            statusCode: 400,
+            body: 'bad request',
+        });
+    }
+    const order = parameter.text.split(' ');
+    const intent = order.shift();
     const lambda = new AWS.Lambda();
     const params = {
         FunctionName: '',
@@ -12,13 +23,13 @@ module.exports.handler = async (event, context, callback) => {
         Payload: JSON.stringify({ hoge: 'hogera', bar: 'boo' }),
     };
     let acceptIntent = 'unkown';
-    if (event.intent === 'hi') {
+    if (intent === 'hi') {
         params.FunctionName = `skill-${process.env.STAGE}-intentHi`;
         acceptIntent = 'hi';
         console.log('hello!');
     }
 
-    if (event.intent === 'bye') {
+    if (intent === 'bye') {
         acceptIntent = 'bye';
         params.FunctionName = `skill-${process.env.STAGE}-intentBye`;
         console.log('good bye!');

@@ -54,7 +54,7 @@ $ yarn lint
 ※Setting up AWS-CLI configuration yet? see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
 
 ## :information_source: Anything else
-<!-- show how to test, how to contribute -->
+After deploy, add SLACK_TOKEN to lambda environment variable.
 
 ## :pencil: Author
 [mesh1nek0x0](https://github.com/mesh1nek0x0)
