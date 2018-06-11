@@ -6,9 +6,12 @@ describe('slackHelperのtest', () => {
     describe('正常系のテスト', () => {
         it('Slash Commandsのリクエストであればパースできること', () => {
             // test時はSLACK_TOKENはundefinedなので送付しない
-            const actual = slackHelper.parseSlashCommnadsRequestEvent({ body: 'text=hi hoge bar' });
-            expect(actual.intent).toBe('hi');
-            expect(actual.arg).toEqual(['hoge', 'bar']);
+            const actual = slackHelper.parseSlashCommnadsRequestEvent({ body: 'text=hi hoge bar&response_url=http' });
+            expect(actual).toEqual({
+                intent: 'hi',
+                arg: ['hoge', 'bar'],
+                responseUrl: 'http',
+            });
         });
     });
 

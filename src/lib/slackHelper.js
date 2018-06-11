@@ -13,6 +13,7 @@ module.exports = class SlackHelper {
             return {
                 intent: order.shift(),
                 arg: order,
+                responseUrl: param.response_url,
             };
         } catch (error) {
             console.log(error);
