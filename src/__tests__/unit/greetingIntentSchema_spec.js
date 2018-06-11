@@ -16,7 +16,10 @@ describe('greetingIntentSchemaのテスト', () => {
     });
 
     describe('正常系のテスト', () => {
-        const testCases = [{ intent: 'hi', expect: 'hi' }, { intent: 'bye', expect: 'bye' }];
+        const testCases = [
+            { intent: 'hi', expect: `skill-${process.env.STAGE}-intentHi` },
+            { intent: 'bye', expect: `skill-${process.env.STAGE}-intentBye` },
+        ];
 
         testCases.forEach(testCase => {
             it(`${testCase.intent}を指定すると${testCase.expect}と解釈されること`, async () => {
@@ -42,11 +45,26 @@ describe('greetingIntentSchemaのテスト', () => {
             AWS.mock('Lambda', 'invoke', function(param, callback) {
                 callback(new Error('failure sample'));
             });
-            await intentSchema.handler({ body: 'text=unkown' }, {}, callback);
+            await intentSchema.handler({ body: 'text=hi' }, {}, callback);
 
             expect(callback.callCount).toBe(1);
             expect(callback.args[0][0]).not.toBeNull();
             expect(callback.args[0][0]).toEqual(new Error('failure sample'));
+        });
+
+        it('意図しないintent時にbad requestとなること', async () => {
+            const callback = sinon.stub();
+            AWS.mock('Lambda', 'invoke', function(param, callback) {
+                callback(new Error('failure sample'));
+            });
+            await intentSchema.handler({ body: 'text=aaa' }, {}, callback);
+
+            expect(callback.callCount).toBe(1);
+            expect(callback.args[0][0]).toBeNull();
+            expect(callback.args[0][1]).toEqual({
+                body: 'bad request',
+                statusCode: 400,
+            });
         });
 
         it('token不一致時に、エラーとして終了すること', async () => {
