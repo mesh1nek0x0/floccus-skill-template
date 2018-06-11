@@ -6,10 +6,21 @@ const SlackHelper = require('./lib/slackHelper');
 module.exports.handler = async (event, context, callback) => {
     console.log('lambda will started');
 
-    let intent = 'unkonwn';
+    let intentLambdaName = '';
     try {
         const request = SlackHelper.parseSlashCommnadsRequestEvent(event);
-        intent = request.intent;
+        switch (request.intent) {
+            case 'hi':
+                intentLambdaName = `skill-${process.env.STAGE}-intentHi`;
+                console.log('hello!');
+                break;
+            case 'bye':
+                intentLambdaName = `skill-${process.env.STAGE}-intentBye`;
+                console.log('good bye!');
+                break;
+            default:
+                throw new Error('unkown intent');
+        }
     } catch (error) {
         return callback(null, {
             statusCode: 400,
@@ -19,21 +30,12 @@ module.exports.handler = async (event, context, callback) => {
 
     const lambda = new AWS.Lambda();
     const params = {
-        FunctionName: '',
+        FunctionName: intentLambdaName,
         ClientContext: 'greetingIntentSchema',
         InvocationType: 'Event',
         Payload: JSON.stringify({ hoge: 'hogera', bar: 'boo' }),
     };
 
-    if (intent === 'hi') {
-        params.FunctionName = `skill-${process.env.STAGE}-intentHi`;
-        console.log('hello!');
-    }
-
-    if (intent === 'bye') {
-        params.FunctionName = `skill-${process.env.STAGE}-intentBye`;
-        console.log('good bye!');
-    }
     await lambda
         .invoke(params)
         .promise()
@@ -42,7 +44,7 @@ module.exports.handler = async (event, context, callback) => {
                 statusCode: 200,
                 body: JSON.stringify({
                     message: 'Go Serverless v1.0! Your function executed successfully!',
-                    intent: intent,
+                    intent: intentLambdaName,
                 }),
             };
             console.log('lambda will be ended with success');
