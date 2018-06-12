@@ -7,8 +7,10 @@ module.exports.handler = async (event, context, callback) => {
     console.log('lambda will started');
 
     let intentLambdaName = '';
+    let intentArgs;
     try {
         const request = SlackHelper.parseSlashCommnadsRequestEvent(event);
+        intentArgs = request.arg;
         switch (request.intent) {
             case 'hi':
                 intentLambdaName = `skill-${process.env.STAGE}-intentHi`;
@@ -33,7 +35,7 @@ module.exports.handler = async (event, context, callback) => {
         FunctionName: intentLambdaName,
         ClientContext: 'greetingIntentSchema',
         InvocationType: 'Event',
-        Payload: JSON.stringify({ hoge: 'hogera', bar: 'boo' }),
+        Payload: JSON.stringify({ args: intentArgs }),
     };
 
     await lambda
