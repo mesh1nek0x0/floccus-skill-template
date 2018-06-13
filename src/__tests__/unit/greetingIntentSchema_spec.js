@@ -49,7 +49,21 @@ describe('greetingIntentSchemaのテスト', () => {
                 });
                 callback(null, 'lambda invoke success');
             });
-            await intentSchema.handler({ body: 'text=hi%20arg1%20arg2' }, {}, () => {});
+            await intentSchema.handler({ body: 'text=hi arg1 arg2' }, {}, () => {});
+        });
+
+        it('受け取ったresponse_urlをintentに引き継げること', async () => {
+            AWS.mock('Lambda', 'invoke', (param, callback) => {
+                // spyの仕込み方が不明
+                expect(param).toEqual({
+                    ClientContext: 'greetingIntentSchema',
+                    FunctionName: `skill-${process.env.STAGE}-intentHi`,
+                    InvocationType: 'Event',
+                    Payload: JSON.stringify({ args: [], responseUrl: 'https' }),
+                });
+                callback(null, 'lambda invoke success');
+            });
+            await intentSchema.handler({ body: 'text=hi&response_url=https' }, {}, () => {});
         });
     });
 
