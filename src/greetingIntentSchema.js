@@ -42,7 +42,6 @@ module.exports.handler = async (event, context, callback) => {
             responseUrl: responseUrl,
         }),
     };
-    console.log('param:', params);
 
     await lambda
         .invoke(params)
