@@ -3,7 +3,7 @@
 :goat: Floccus skill template powered by serverless.
 <!-- One sentence about your product and what it dose.-->
 
-![](	https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)
+![](https://circleci.com/gh/mesh1nek0x0/floccus-skill-template.svg?style=shield)
 <!-- add ci status badge -->
 
 ## :pushpin: Description
@@ -11,10 +11,11 @@ Focus on Creating a back-end service for Slack Slash Commands.
 
 ## :white_check_mark: Features
 <!-- list up your product features. -->
-- WIP :art: support .editorconfig
-- WIP :shirt: support lint with [eslint](https://eslint.org/)
-- WIP :black_joker: support test&coverage with [jest](https://facebook.github.io/jest/)
-- WIP :arrows_counterclockwise: support [CircleCI](https://circleci.com/)
+- :zap: support [Serverless](https://serverless.com/)
+- :art: support .editorconfig
+- :shirt: support lint with [eslint](https://eslint.org/)
+- :black_joker: support test&coverage with [jest](https://facebook.github.io/jest/)
+- :arrows_counterclockwise: support [CircleCI](https://circleci.com/)
 
 ---
 
@@ -49,7 +50,10 @@ $ yarn test
 $ yarn lint
 ```
 
-*deploy lambda*
+*deploy Lambda&API Gateway*
+```
+$ yarn deploy
+```
 
 ※Setting up AWS-CLI configuration yet? see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
 
