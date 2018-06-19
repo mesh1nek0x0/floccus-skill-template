@@ -1,6 +1,8 @@
 'use strict';
 
 const slackHelper = require('../../../lib/slackHelper');
+const { IncomingWebhook } = require('@slack/client');
+const sinon = require('sinon');
 
 describe('slackHelperのtest', () => {
     describe('正常系のテスト', () => {
@@ -12,6 +14,15 @@ describe('slackHelperのtest', () => {
                 arg: ['hoge', 'bar'],
                 responseUrl: 'http',
             });
+        });
+
+        it('responseUrlを使ってメッセージをsendできること', async () => {
+            // 実際には通信しないようにする
+            sinon.stub(IncomingWebhook.prototype, 'send').callsFake(() => {
+                return { text: 'ok with stub' };
+            });
+            const result = await slackHelper.postMessage('slack helper', 'https://hooks.slack.com/services/xxxx');
+            expect(result).toBe('ok with stub');
         });
     });
 
