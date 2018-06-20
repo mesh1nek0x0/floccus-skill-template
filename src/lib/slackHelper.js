@@ -1,6 +1,7 @@
 'use strict';
 
 const queryString = require('query-string');
+const { IncomingWebhook } = require('@slack/client');
 
 module.exports = class SlackHelper {
     static parseSlashCommnadsRequestEvent(event) {
@@ -18,6 +19,16 @@ module.exports = class SlackHelper {
         } catch (error) {
             console.log(error);
             throw new Error(error.message);
+        }
+    }
+
+    static async postMessage(message, responseUrl) {
+        const webhook = new IncomingWebhook(responseUrl);
+        try {
+            const result = await webhook.send(message);
+            return result.text;
+        } catch (error) {
+            throw new Error('post message failed');
         }
     }
 };
