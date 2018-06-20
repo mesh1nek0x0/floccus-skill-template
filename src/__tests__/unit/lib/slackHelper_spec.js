@@ -5,6 +5,10 @@ const { IncomingWebhook } = require('@slack/client');
 const sinon = require('sinon');
 
 describe('slackHelperのtest', () => {
+    afterEach(() => {
+        sinon.restore();
+    });
+
     describe('正常系のテスト', () => {
         it('Slash Commandsのリクエストであればパースできること', () => {
             // test時はSLACK_TOKENはundefinedなので送付しない
