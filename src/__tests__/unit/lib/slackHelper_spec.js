@@ -42,5 +42,21 @@ describe('slackHelperのtest', () => {
                 slackHelper.parseSlashCommnadsRequestEvent({ body: 'text=hi&token=invalid' });
             }).toThrowError('bad request');
         });
+
+        it('Slackへのメッセージ送信に失敗した場合、例外が返されること', async () => {
+            // 実際には通信しないようにする
+            sinon.stub(IncomingWebhook.prototype, 'send').callsFake(() => {
+                throw new Error('slack api error with stub');
+            });
+
+            // see: jest await async sample
+            // https://facebook.github.io/jest/docs/en/tutorial-async.html
+            expect.assertions(1);
+            try {
+                await slackHelper.postMessage('slack helper', 'https://hooks.slack.com/services/xxxx');
+            } catch (error) {
+                expect(error.message).toBe('post message failed');
+            }
+        });
     });
 });
