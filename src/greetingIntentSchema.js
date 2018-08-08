@@ -10,7 +10,7 @@ module.exports.handler = async (event, context, callback) => {
     let intentArgs;
     let responseUrl = '';
     try {
-        const request = SlackHelper.parseSlashCommnadsRequestEvent(event);
+        const request = SlackHelper.parseSlashCommandsRequestEvent(event);
         intentArgs = request.arg;
         responseUrl = request.responseUrl;
         switch (request.intent) {
