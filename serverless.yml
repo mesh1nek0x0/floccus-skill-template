@@ -22,6 +22,7 @@ provider:
   runtime: nodejs8.10
   environment:
     STAGE: dev
+    SLACK_TOKEN: your-token
 
 # you can overwrite defaults here
 #  stage: dev
