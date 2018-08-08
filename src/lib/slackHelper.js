@@ -4,7 +4,7 @@ const queryString = require('query-string');
 const { IncomingWebhook } = require('@slack/client');
 
 module.exports = class SlackHelper {
-    static parseSlashCommnadsRequestEvent(event) {
+    static parseSlashCommandsRequestEvent(event) {
         try {
             const param = queryString.parse(event.body);
             if (param.token !== process.env.SLACK_TOKEN) {
